@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "student", schema = "ugly_code")
-public class student {
+public class Student {
 
     @Id
     @Column(name = "student_id")
@@ -21,6 +21,9 @@ public class student {
 
     @Column(name = "student_course")
     public Integer course;
+
+    @Column(name = "student_passed_exams")
+    private Integer passedExams;
 
     public boolean isAllExamsPassed(Integer totalExams, Integer passedExams) {
         if (totalExams == passedExams) {
@@ -60,5 +63,13 @@ public class student {
 
     public void setCourse(Integer course) {
         this.course = course;
+    }
+
+    public Integer getPassedExams() {
+        return passedExams;
+    }
+
+    public void setPassedExams(Integer passedExams) {
+        this.passedExams = passedExams;
     }
 }

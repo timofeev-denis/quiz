@@ -8,17 +8,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/students")
-public class student_controller {
+public class StudentController {
 
     @Autowired
-    student_repository studRepo;
+    Student_repository studRepo;
 
     @Autowired
-    examination_repository examRepo;
+    Examination_repository examRepo;
 
     @GetMapping("/findAll")
-    public List<student> findAll() {
-        List<student> s = studRepo.findAll();
+    public List<Student> findAll() {
+        List<Student> s = studRepo.findAll();
         if (s.isEmpty()) System.out.println("Суденты не найдены");
 
         return s;
@@ -26,7 +26,7 @@ public class student_controller {
 
     @GetMapping("/{id}/name")
     public String getNameById(@PathVariable Long id) {
-        Optional<student> student = studRepo.findById(id);
+        Optional<Student> student = studRepo.findById(id);
         if (student.isPresent()) {
             return student.get().getName();
         } else {
@@ -35,15 +35,14 @@ public class student_controller {
     }
 
     @PostMapping("/update")
-    public void update(student student) {
+    public void update(Student student) {
         studRepo.save(student);
     }
 
     @PostMapping("/advance")
-    public void advanceToNextCourse(@RequestBody student student) {
+    public void advanceToNextCourse(@RequestBody Student student) {
         Integer totalExams = examRepo.getTotalCount();
-        Integer passedExams = examRepo.getPassedCountByStudentId(student.id);
-        if (student.isAllExamsPassed(totalExams, passedExams)) {
+        if (student.getPassedExams() == totalExams) {
             student.course++;
             studRepo.save(student);
         }

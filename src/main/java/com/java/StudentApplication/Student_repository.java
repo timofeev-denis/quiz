@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface student_repository extends JpaRepository<student, Long> {
-    List<student> findAll();
+public interface Student_repository extends JpaRepository<Student, Long> {
+    List<Student> findAll();
 
-    Optional<student> findById(Long id);
+    Optional<Student> findById(Long id);
 
-    student save(student student);
+    Student save(Student student);
 }

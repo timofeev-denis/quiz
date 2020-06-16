@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Фиктивный репозиторий
  */
 @Repository
-public interface examination_repository extends JpaRepository<examination, Long> {
+public interface Examination_repository extends JpaRepository<examination, Long> {
 
     @Query(nativeQuery = true, value = "SELECT 5")
     Integer getTotalCount();
