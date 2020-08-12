@@ -4,13 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
-
 /**
  * Фиктивный репозиторий
  */
 @Repository
-public interface Examination_repository extends JpaRepository<examination, Long> {
+public interface Examination_repository extends JpaRepository<Examination, Long> {
 
     @Query(nativeQuery = true, value = "SELECT 5")
     Integer getTotalCount();

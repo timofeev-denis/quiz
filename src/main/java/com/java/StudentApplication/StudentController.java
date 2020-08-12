@@ -16,7 +16,7 @@ public class StudentController {
     @Autowired
     Examination_repository examRepo;
 
-    @GetMapping("/findAll")
+    @GetMapping("/FindAll")
     public List<Student> findAll() {
         List<Student> s = studRepo.findAll();
         if (s.isEmpty()) System.out.println("Суденты не найдены");
@@ -24,27 +24,29 @@ public class StudentController {
         return s;
     }
 
-    @GetMapping("/{id}/name")
-    public String getNameById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public Student getById(@PathVariable Long id) {
         Optional<Student> student = studRepo.findById(id);
         if (student.isPresent()) {
-            return student.get().getName();
+            return student.get();
         } else {
-            return "";
+            return null;
         }
     }
 
     @PostMapping("/update")
     public void update(Student student) {
+        // Если студент сдал все экзамены, то переводим его на следующий курс
+        Integer totalExams = examRepo.getTotalCount(); // Получаем количество всех существующих экзаменов
+        if (student.getPassedExams() == totalExams) {
+            student.course++;
+        }
         studRepo.save(student);
     }
 
-    @PostMapping("/advance")
-    public void advanceToNextCourse(@RequestBody Student student) {
-        Integer totalExams = examRepo.getTotalCount();
-        if (student.getPassedExams() == totalExams) {
-            student.course++;
-            studRepo.save(student);
-        }
+    @PutMapping("/create")
+    public void create(Student student) {
+        studRepo.save(student);
     }
+
 }
